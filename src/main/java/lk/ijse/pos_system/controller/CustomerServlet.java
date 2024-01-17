@@ -1,4 +1,4 @@
-package lk.ijse.pos_system.servlet;
+package lk.ijse.pos_system.controller;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -51,7 +51,7 @@ public class CustomerServlet extends HttpServlet {
 //            e.printStackTrace();
 
             resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
-            logger.error("Customer not saved : "+e.getMessage());
+            logger.error("Customer not saved");
         }
 
         resp.getWriter().write(jsonb.toJson(responseDTO));
@@ -83,7 +83,7 @@ public class CustomerServlet extends HttpServlet {
                 responseDTO.setContent(null);
 
                 resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
-                logger.error(e.getMessage());
+                logger.error("Can't find customer");
 
             }
 
@@ -95,7 +95,7 @@ public class CustomerServlet extends HttpServlet {
                 responseDTO.setMessage("Success");
                 responseDTO.setContent(allCustomers);
 
-                logger.info("Data Fetched!");
+                logger.info("Customers Fetched!");
 
             } catch (Exception e) {
 //                e.printStackTrace();
@@ -105,7 +105,7 @@ public class CustomerServlet extends HttpServlet {
                 responseDTO.setContent(null);
 
                 resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
-                logger.error(e.getMessage());
+                logger.error("Can't find Customers");
 
             }
         }
@@ -139,7 +139,7 @@ public class CustomerServlet extends HttpServlet {
             responseDTO.setMessage("Check Customer Id");
             responseDTO.setContent(customerDTO);
 
-            logger.error(e.getMessage());
+            logger.error("Customer not updated");
         }
 
         resp.getWriter().write(jsonb.toJson(responseDTO));
@@ -173,7 +173,7 @@ public class CustomerServlet extends HttpServlet {
             responseDTO.setMessage("Check Customer Id");
             responseDTO.setContent(null);
 
-            logger.error(e.getMessage());
+            logger.error("Customer not deleted");
 
         }
 

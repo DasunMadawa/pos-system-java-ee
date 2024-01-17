@@ -2,56 +2,105 @@ package lk.ijse.pos_system.dao.custom.impl;
 
 import lk.ijse.pos_system.dao.custom.ItemDAO;
 import lk.ijse.pos_system.entity.Item;
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
+import lk.ijse.pos_system.util.CrudUtil;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAOImpl implements ItemDAO {
     @Override
-    public boolean add(Item item, Session session) throws Exception {
-        session.persist(item);
-        return true;
+    public boolean add(Item item) throws Exception {
+        String sql = "INSERT INTO customer VALUES (? , ? , ? , ?)";
+
+        boolean isAdded =  CrudUtil.execute(
+                sql ,
+                item.getICode() ,
+                item.getIName() ,
+                item.getIPrice() ,
+                item.getIQty()
+        );
+
+        if (isAdded){
+            return true;
+        }
+        throw new Exception();
 
     }
 
     @Override
-    public Item search(String id, Session session) throws Exception {
-        Item item = session.get(Item.class, id);
+    public Item search(String id) throws Exception {
+        String sql = "SELECT * FROM item WHERE iCode = ?";
 
-        if (item == null) {
-            NativeQuery nativeQuery = session.createNativeQuery("SELECT * From item WHERE iName = ?1");
-            nativeQuery.addEntity(Item.class);
-            nativeQuery.setParameter(1, id);
+        ResultSet rs = CrudUtil.execute(sql, id);
 
-            item = (Item) nativeQuery.uniqueResult();
-
+        if (rs.next()) {
+            return new Item(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getDouble(3),
+                    rs.getInt(4)
+            );
         }
 
-        return item;
+        throw new Exception();
 
     }
 
     @Override
-    public boolean update(Item item, Session session) throws Exception {
-        session.update(item);
-        return true;
+    public boolean update(Item item) throws Exception {
+        String sql = "UPDATE item SET iName = ? , iPrice = ? , iQty = ? WHERE iCode = ?";
+
+        boolean isUpdated = CrudUtil.execute(
+                sql ,
+                item.getIName() ,
+                item.getIPrice() ,
+                item.getIQty() ,
+                item.getICode()
+        );
+
+        if (isUpdated) {
+            return true;
+        }
+
+        throw new Exception();
+
     }
 
     @Override
-    public boolean delete(String id, Session session) throws Exception {
-        Item item = session.get(Item.class, id);
-        session.delete(item);
-        return true;
+    public boolean delete(String id) throws Exception {
+        String sql = "DELETE FROM Item WHERE iCode = ?";
+
+        boolean isDeleted = CrudUtil.execute(sql , id);
+
+        if (isDeleted) {
+            return true;
+        }
+
+        throw new Exception();
 
     }
 
     @Override
-    public List<Item> getAll(Session session) throws Exception {
-        NativeQuery nativeQuery = session.createNativeQuery("SELECT  * FROM item");
-        nativeQuery.addEntity(Item.class);
+    public List<Item> getAll() throws Exception {
+        String sql = "SELECT * FROM ITEM";
 
-        return nativeQuery.list();
+        ResultSet rs = CrudUtil.execute(sql);
+
+        List<Item> items = new ArrayList<>();
+
+        while (rs.next()) {
+            items.add(
+                    new Item(
+                            rs.getString(1),
+                            rs.getString(2),
+                            rs.getDouble(3),
+                            rs.getInt(4)
+                    )
+            );
+        }
+
+        return items;
     }
 
 }

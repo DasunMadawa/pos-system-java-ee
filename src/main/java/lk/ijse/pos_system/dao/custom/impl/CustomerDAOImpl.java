@@ -2,56 +2,108 @@ package lk.ijse.pos_system.dao.custom.impl;
 
 import lk.ijse.pos_system.dao.custom.CustomerDAO;
 import lk.ijse.pos_system.entity.Customer;
+import lk.ijse.pos_system.util.CrudUtil;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public boolean add(Customer customer, Session session) throws Exception {
-        session.persist(customer);
-        return true;
+    public boolean add(Customer customer) throws Exception {
+        String sql = "INSERT INTO customer VALUES (? , ? , ? , ?)";
 
-    }
+        boolean isAdded = CrudUtil.execute(
+                sql ,
+                customer.getcId() ,
+                customer.getcName() ,
+                customer.getcAddress() ,
+                customer.getcSalary()
+        );
 
-    @Override
-    public Customer search(String id, Session session) throws Exception {
-        Customer customer = session.get(Customer.class, id);
-
-        if (customer == null) {
-            NativeQuery nativeQuery = session.createNativeQuery("SELECT * FROM customer WHERE cName = ?1");
-            nativeQuery.addEntity(Customer.class);
-            nativeQuery.setParameter(1, id);
-
-            customer = (Customer) nativeQuery.uniqueResult();
+        if (isAdded) {
+            return true;
         }
 
-        return customer;
+        throw new Exception();
 
     }
 
     @Override
-    public boolean update(Customer customer, Session session) throws Exception {
-        session.update(customer);
-        return true;
+    public Customer search(String id) throws Exception {
+        String sql = "SELECT * FROM customer WHERE cId = ?";
+
+        ResultSet rs = CrudUtil.execute(sql, id);
+
+        if (rs.next()){
+            return new Customer(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getDouble(4)
+            );
+        }
+
+        throw new Exception();
 
     }
 
     @Override
-    public boolean delete(String id, Session session) throws Exception {
-        Customer customer = session.get(Customer.class, id);
-        session.delete(customer);
-        return true;
+    public boolean update(Customer customer) throws Exception {
+        String sql = "UPDATE customer SET cName = ? , cAddress = ? , cSalary WHERE cId = ?";
+
+        boolean isUpdated = CrudUtil.execute(
+                sql ,
+                customer.getcName() ,
+                customer.getcAddress() ,
+                customer.getcSalary() ,
+                customer.getcId()
+        );
+
+        if (isUpdated) {
+            return true;
+        }
+
+        throw new Exception();
 
     }
 
     @Override
-    public List<Customer> getAll(Session session) throws Exception {
-        NativeQuery nativeQuery = session.createNativeQuery("SELECT * FROM customer");
-        nativeQuery.addEntity(Customer.class);
+    public boolean delete(String id) throws Exception {
+        String sql = "DELETE FROM customer WHERE cId = ?";
 
-        return nativeQuery.list();
+        boolean isDeleted = CrudUtil.execute(sql , id);
+
+        if (isDeleted) {
+            return true;
+        }
+
+        throw new Exception();
+
+    }
+
+    @Override
+    public List<Customer> getAll() throws Exception {
+        String sql = "SELECT * FROM customer";
+
+        ResultSet rs = CrudUtil.execute(sql);
+        List<Customer> customers = new ArrayList<>();
+
+        while (rs.next()) {
+            customers.add(
+                    new Customer(
+                            rs.getString(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getDouble(4)
+                    )
+            );
+
+        }
+
+        return customers;
 
     }
 

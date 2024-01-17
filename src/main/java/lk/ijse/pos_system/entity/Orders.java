@@ -3,28 +3,24 @@ package lk.ijse.pos_system.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 //@Data
 //@ToString
 @Getter
 @Setter
-public class Order_t {
-    @Id
+public class Orders {
     private String oId;
-    private String oDate;
+    private Date oDate;
     private double oTotal;
     private double oSubTotal;
     private int oDiscount;
     private double oBalance;
 
-    @ManyToOne(fetch = FetchType.EAGER)
     private Customer customer;
-
-    @OneToMany(mappedBy = "order_t" , cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    private List<Item> items;
 
 }

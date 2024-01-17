@@ -6,8 +6,8 @@ import lk.ijse.pos_system.dto.OrderDTO;
 import java.util.List;
 
 public interface OrderBO extends SuperBO {
-    public boolean addOrder(OrderDTO orderDTO) throws Exception;
-    public OrderDTO searchOrder(String id) throws Exception;
-    public List<OrderDTO> getAllOrders() throws Exception;
+    boolean addOrder(OrderDTO orderDTO) throws Exception;
+    OrderDTO searchOrder(String id) throws Exception;
+    List<OrderDTO> getAllOrders() throws Exception;
 
 }

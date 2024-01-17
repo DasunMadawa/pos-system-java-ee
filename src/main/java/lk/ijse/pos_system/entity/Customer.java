@@ -7,20 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 //@Data
 //@ToString
 public class Customer {
-    @Id
     private String cId;
     private String cName;
     private String cAddress;
     private double cSalary;
-
-    @OneToMany(mappedBy = "customer" , cascade = CascadeType.ALL , orphanRemoval = true , fetch = FetchType.LAZY)
-    private List<Order_t> orders;
 
     public String getcId() {
         return cId;
@@ -52,13 +47,5 @@ public class Customer {
 
     public void setcSalary(double cSalary) {
         this.cSalary = cSalary;
-    }
-
-    public List<Order_t> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order_t> orders) {
-        this.orders = orders;
     }
 }

@@ -4,7 +4,7 @@ This is a Java EE-based API for a Point of Sale (POS) system, designed to handle
 
 ## Endpoints Documentation
 
-For API documentation, including available endpoints and methods, refer to [API Documentation](https://github.com/DasunMadawa/pos-system-java-ee/blob/master/APIDocumentation.md).
+For API documentation, including available endpoints and methods, refer to [API Documentation](https://documenter.getpostman.com/view/31691550/2s9YsRdVYb).
 
 ## Front End Web Page
 

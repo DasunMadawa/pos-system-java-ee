@@ -31,9 +31,9 @@ public class CustomerController extends HttpServlet {
         try {
             DBConnection.getInstance().getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }

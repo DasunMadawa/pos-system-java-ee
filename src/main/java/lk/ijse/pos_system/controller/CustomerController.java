@@ -29,6 +29,7 @@ public class CustomerServlet extends HttpServlet {
         System.out.println("post");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
+            resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             return;
         }
         resp.setContentType("application/json");
@@ -118,6 +119,7 @@ public class CustomerServlet extends HttpServlet {
         System.out.println("put");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
+            resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             return;
         }
         resp.setContentType("application/json");
@@ -133,12 +135,13 @@ public class CustomerServlet extends HttpServlet {
             logger.info("Customer Updated");
 
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
 
             responseDTO.setCode(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             responseDTO.setMessage("Check Customer Id");
             responseDTO.setContent(customerDTO);
 
+            resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             logger.error("Customer not updated");
         }
 
@@ -154,6 +157,7 @@ public class CustomerServlet extends HttpServlet {
         String cId = req.getParameter("cId");
 
         if (cId == null) {
+            resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             return;
         }
         resp.setContentType("application/json");
@@ -173,6 +177,7 @@ public class CustomerServlet extends HttpServlet {
             responseDTO.setMessage("Check Customer Id");
             responseDTO.setContent(null);
 
+            resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             logger.error("Customer not deleted");
 
         }

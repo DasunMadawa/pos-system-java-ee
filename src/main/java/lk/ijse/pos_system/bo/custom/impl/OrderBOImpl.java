@@ -1,6 +1,5 @@
 package lk.ijse.pos_system.bo.custom.impl;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import lk.ijse.pos_system.bo.custom.OrderBO;
 import lk.ijse.pos_system.dao.DAOFactory;
 import lk.ijse.pos_system.dao.custom.CustomerDAO;
@@ -13,8 +12,6 @@ import lk.ijse.pos_system.dto.ItemDTO;
 import lk.ijse.pos_system.dto.OrderDTO;
 import lk.ijse.pos_system.entity.Item;
 import lk.ijse.pos_system.entity.Orders;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.modelmapper.ModelMapper;
 
 import java.sql.Connection;
@@ -47,33 +44,23 @@ public class OrderBOImpl implements OrderBO {
                 tempItem.setIQty(newQty);
 
                 itemDAO.update(tempItem);
+
             }
-            System.out.println(1);
+
             Orders orders = modelMapper.map(orderDTO, Orders.class);
-            System.out.println(orders.getItems().size());
-
-            List<Item> orderItems = new ArrayList<>();
-            for (ItemDTO itemDTO : orderDTO.getItems()) {
-                orderItems.add(
-                        modelMapper.map(itemDTO, Item.class)
-                );
-            }
-
-            orders.setItems(orderItems);
 
             orderDAO.add(orders);
 
             ordersItemDAO.add(orders);
 
-            System.out.println(2);
-
             connection.commit();
-            System.out.println(3);
             return true;
 
         } catch (Exception e) {
-            connection.rollback();
             throw new Exception();
+        } finally {
+            connection.rollback();
+            connection.setAutoCommit(true);
         }
 
     }

@@ -1,28 +1,11 @@
 <configuration>
-<!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--        <encoder>-->
-<!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
-
-<!--    <root level="info">-->
-<!--        <appender-ref ref="CONSOLE"/>-->
-<!--    </root>-->
-
-    <!-- Console Appender Configuration -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Custom Logger Configuration -->
-    <logger name="lk.ijse.pos_system.custom" level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE"/>
-    </logger>
-
-<!--    &lt;!&ndash; Root Logger Configuration &ndash;&gt;-->
-<!--    <root level="warn">-->
-<!--        <appender-ref ref="CONSOLE"/>-->
-<!--    </root>-->
+    </root>
 </configuration>

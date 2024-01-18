@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "item_servlet", urlPatterns = "/item_servlet")
-public class ItemServlet extends HttpServlet {
+public class ItemController extends HttpServlet {
     private ItemBO itemBO = (ItemBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.ITEM);
     private final Logger logger = LoggerFactory.getLogger("lk.ijse.pos_system.custom");
     private Jsonb jsonb = JsonbBuilder.create();
@@ -26,7 +26,7 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("get");
+//        System.out.println("get");
 
         String iCode = req.getParameter("iCode");
         resp.setContentType("application/json");
@@ -79,7 +79,7 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("post");
+//        System.out.println("post");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
@@ -114,7 +114,7 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("put");
+//        System.out.println("put");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
@@ -150,7 +150,7 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("delete");
+//        System.out.println("delete");
 
         String iCode = req.getParameter("iCode");
 

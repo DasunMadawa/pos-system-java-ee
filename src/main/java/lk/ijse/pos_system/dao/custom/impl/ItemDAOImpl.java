@@ -11,7 +11,7 @@ import java.util.List;
 public class ItemDAOImpl implements ItemDAO {
     @Override
     public boolean add(Item item) throws Exception {
-        String sql = "INSERT INTO customer VALUES (? , ? , ? , ?)";
+        String sql = "INSERT INTO item VALUES (? , ? , ? , ?)";
 
         boolean isAdded =  CrudUtil.execute(
                 sql ,
@@ -83,7 +83,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public List<Item> getAll() throws Exception {
-        String sql = "SELECT * FROM ITEM";
+        String sql = "SELECT * FROM item";
 
         ResultSet rs = CrudUtil.execute(sql);
 

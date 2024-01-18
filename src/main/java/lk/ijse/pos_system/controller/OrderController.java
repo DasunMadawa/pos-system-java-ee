@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "order_servlet", urlPatterns = "/order_servlet")
-public class OrderServlet extends HttpServlet {
+public class OrderController extends HttpServlet {
     private OrderBO orderBO = (OrderBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.ORDER);
     private Jsonb jsonb = JsonbBuilder.create();
     private final Logger logger = LoggerFactory.getLogger("lk.ijse.pos_system.custom");
@@ -26,7 +26,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Order_get");
+//        System.out.println("Order_get");
 
         String oId = req.getParameter("oId");
         resp.setContentType("application/json");
@@ -82,6 +82,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        System.out.println("post");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);

@@ -6,7 +6,7 @@ create table customer (
 
 );
 
-create table customer (
+create table item (
     iCode VARCHAR(5) PRIMARY KEY,
     iName VARCHAR(50),
     iPrice DECIMAL(8,2),

@@ -52,7 +52,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean update(Customer customer) throws Exception {
-        String sql = "UPDATE customer SET cName = ? , cAddress = ? , cSalary WHERE cId = ?";
+        String sql = "UPDATE customer SET cName = ? , cAddress = ? , cSalary = ? WHERE cId = ?";
 
         boolean isUpdated = CrudUtil.execute(
                 sql ,

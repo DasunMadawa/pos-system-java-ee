@@ -4,6 +4,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import lk.ijse.pos_system.bo.BOFactory;
 import lk.ijse.pos_system.bo.custom.CustomerBO;
+import lk.ijse.pos_system.db.DBConnection;
 import lk.ijse.pos_system.dto.CustomerDTO;
 import lk.ijse.pos_system.dto.ResponseDTO;
 import org.slf4j.Logger;
@@ -15,18 +16,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "customer_servlet", urlPatterns = "/customer_servlet", loadOnStartup = 1)
-public class CustomerServlet extends HttpServlet {
+@WebServlet(name = "customer_servlet", urlPatterns = "/customer_servlet")
+public class CustomerController extends HttpServlet {
     private CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     private final static Logger logger = LoggerFactory.getLogger("lk.ijse.pos_system.custom");
     private Jsonb jsonb = JsonbBuilder.create();
     private ResponseDTO responseDTO = new ResponseDTO();
 
     @Override
+    public void init() throws ServletException {
+        try {
+            DBConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("post");
+//        System.out.println("post");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
@@ -61,7 +75,7 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("get");
+//        System.out.println("get");
 
         String cId = req.getParameter("cId");
         resp.setContentType("application/json");
@@ -116,7 +130,7 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("put");
+//        System.out.println("put");
 
         if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
@@ -135,7 +149,7 @@ public class CustomerServlet extends HttpServlet {
             logger.info("Customer Updated");
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
 
             responseDTO.setCode(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
             responseDTO.setMessage("Check Customer Id");
@@ -152,7 +166,7 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("delete");
+//        System.out.println("delete");
 
         String cId = req.getParameter("cId");
 

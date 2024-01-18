@@ -36,7 +36,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Orders search(String id) throws Exception {
-        String sql = "SELECT * FROM orders INNER JOIN orders_item ON orders.oid WHERE oId = ?";
+        String sql = "SELECT * FROM orders WHERE oId = ?";
 
         ResultSet rs = CrudUtil.execute(sql, id);
 

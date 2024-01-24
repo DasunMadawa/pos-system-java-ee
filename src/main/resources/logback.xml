@@ -6,7 +6,6 @@
         </encoder>
     </appender>
 
-    <!-- Custom Logger Configuration for INFO level -->
     <logger name="lk.ijse.pos_system.custom" level="debug">
         <appender-ref ref="CONSOLE"/>
     </logger>

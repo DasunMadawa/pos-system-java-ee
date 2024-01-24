@@ -26,6 +26,11 @@ public class HomeController extends HttpServlet {
     private ResponseDTO responseDTO = new ResponseDTO();
 
     @Override
+    public void init() throws ServletException {
+        super.init();
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         try {
